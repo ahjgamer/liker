@@ -2,7 +2,7 @@
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "EntityKillerGui"
 screenGui.ResetOnSpawn = false
-screenGui.Parent = game:GetService("CoreGui") -- Use PlayerGui if in normal Roblox scripts
+screenGui.Parent = game:GetService("CoreGui") -- Use PlayerGui if normal Roblox script
 
 -- Main frame
 local frame = Instance.new("Frame")
@@ -15,7 +15,7 @@ frame.Parent = screenGui
 frame.Active = true
 frame.Draggable = true
 
--- Title bar for dragging and minimizing
+-- Title bar
 local titleBar = Instance.new("Frame")
 titleBar.Size = UDim2.new(1, 0, 0, 30)
 titleBar.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
@@ -42,14 +42,14 @@ minimizeBtn.Size = UDim2.new(0, 25, 0, 25)
 minimizeBtn.Position = UDim2.new(1, -30, 0, 2)
 minimizeBtn.Parent = titleBar
 
--- Container for buttons, to hide/show on minimize
+-- Content frame for buttons
 local contentFrame = Instance.new("Frame")
 contentFrame.Size = UDim2.new(1, 0, 1, -30)
 contentFrame.Position = UDim2.new(0, 0, 0, 30)
 contentFrame.BackgroundTransparency = 1
 contentFrame.Parent = frame
 
--- Kill Button
+-- Kill button
 local killButton = Instance.new("TextButton")
 killButton.Size = UDim2.new(0.8, 0, 0, 45)
 killButton.Position = UDim2.new(0.1, 0, 0.2, 0)
@@ -60,13 +60,13 @@ killButton.TextSize = 24
 killButton.Text = "Kill All Outlaws"
 killButton.Parent = contentFrame
 
--- Minimize toggle function
+-- Minimize toggle
 local minimized = false
 minimizeBtn.MouseButton1Click:Connect(function()
     minimized = not minimized
     if minimized then
         contentFrame.Visible = false
-        frame.Size = UDim2.new(0, 220, 0, 30) -- shrink height to title bar only
+        frame.Size = UDim2.new(0, 220, 0, 30)
         minimizeBtn.Text = "+"
     else
         contentFrame.Visible = true
@@ -85,9 +85,8 @@ local function killAllOutlaws()
         if obj:IsA("Model") and obj.Name == "Outlaw" then
             local humanoid = obj:FindFirstChildOfClass("Humanoid")
             if humanoid and humanoid.Health > 0 then
-                -- Skip local player character just in case
                 if localPlayer and localPlayer.Character and obj == localPlayer.Character then
-                    -- Don't kill player
+                    -- Skip player
                 else
                     humanoid.Health = 0
                 end
